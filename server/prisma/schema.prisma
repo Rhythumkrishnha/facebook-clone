@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id            String         @id @default(uuid())
+  name          String
+  username      String         @unique
+  email         String?        @unique
+  contact       Int?
+  password      String
+  bio           String?
+  cover_photo   String?
+  profile_photo String?
+  posts         post[]
+  group         fb_group[]
+  member        group_member[]
+  comment       post_comment[]
+  like          post_like[]
+  notification  notification[]
+  save          save_post[]
+  event         event[]
+  participant   participant[]
+  story         story[]
+  likes         comment_like[]
+  tag           post_tag[]
+}
+
+model post {
+  id         String         @id @default(uuid())
+  content    String
+  created_at DateTime       @default(now())
+  photo_url  String?
+  video_url  String?
+  author     user           @relation(fields: [author_id], references: [id])
+  author_id  String
+  group      fb_group?      @relation(fields: [group_id], references: [id])
+  group_id   String?
+  comment    post_comment[]
+  like       post_like[]
+  save       save_post[]
+  tag        post_tag[]
+}
+
+model friend {
+  id           String  @id @default(uuid())
+  follower_id  String
+  following_id String
+  status       Boolean @default(false)
+}
+
+model fb_group {
+  id         String         @id @default(uuid())
+  creator    user           @relation(fields: [creator_id], references: [id])
+  creator_id String
+  name       String
+  created_at DateTime       @default(now())
+  member     group_member[]
+  creates    post[]
+}
+
+model group_member {
+  id        String   @id @default(uuid())
+  group     fb_group @relation(fields: [group_id], references: [id])
+  user      user     @relation(fields: [user_id], references: [id])
+  group_id  String
+  user_id   String
+  joined_at DateTime @default(now())
+}
+
+model post_comment {
+  id                String         @id @default(uuid())
+  content           String
+  post              post           @relation(fields: [post_id], references: [id])
+  post_id           String
+  user              user           @relation(fields: [user_id], references: [id])
+  user_id           String
+  parent_comment_id String?
+  like              comment_like[]
+}
+
+model post_like {
+  id      String @id @default(uuid())
+  post    post   @relation(fields: [post_id], references: [id])
+  post_id String
+  user    user   @relation(fields: [user_id], references: [id])
+  user_id String
+}
+
+model comment_like {
+  id         String       @id @default(uuid())
+  user       user         @relation(fields: [user_id], references: [id])
+  user_id    String
+  comment    post_comment @relation(fields: [comment_id], references: [id])
+  comment_id String
+}
+
+model notification {
+  id          String   @id @default(uuid())
+  user        user     @relation(fields: [user_id], references: [id])
+  user_id     String
+  content     String
+  notified_at DateTime @default(now())
+}
+
+model chat {
+  id          String @id @default(uuid())
+  sender_id   String
+  receiver_id String
+  message     String
+}
+
+model save_post {
+  id      String @id @default(uuid())
+  post    post   @relation(fields: [post_id], references: [id])
+  post_id String
+  user    user   @relation(fields: [user_id], references: [id])
+  user_id String
+}
+
+model event {
+  id           String        @id @default(uuid())
+  title        String
+  user         user          @relation(fields: [organizer_id], references: [id])
+  organizer_id String
+  location     String
+  date         DateTime
+  participant  participant[]
+}
+
+model participant {
+  id       String @id @default(uuid())
+  event    event  @relation(fields: [event_id], references: [id])
+  event_id String
+  user     user   @relation(fields: [user_id], references: [id])
+  user_id  String
+  status   status @default(going)
+}
+
+enum status {
+  interested
+  going
+  not_interested
+}
+
+model story {
+  id         String   @id @default(uuid())
+  user       user     @relation(fields: [user_id], references: [id])
+  video_url  String?
+  user_id    String
+  created_at DateTime @default(now())
+}
+
+model post_tag {
+  id      String @id @default(uuid())
+  post    post   @relation(fields: [post_id], references: [id])
+  post_id String
+  user    user   @relation(fields: [user_id], references: [id])
+  user_id String
+}

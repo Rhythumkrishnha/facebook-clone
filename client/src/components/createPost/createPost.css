@@ -1,0 +1,125 @@
+.createPost {
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(238, 232, 232, 0.4);
+}
+
+.createPostWrapper {
+  width: 40%;
+  height: 40%;
+  display: flex;
+}
+
+.createPostLeft,
+.createPostRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  position: relative;
+}
+
+.createPostLogo {
+  font-size: 50px;
+  font-weight: 800;
+  color: #1775ee;
+  margin-bottom: 10px;
+}
+
+.createPostDesc {
+  font-size: 16px;
+}
+
+.createPostBox {
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1;
+  gap: 15px;
+}
+
+.createPostBoxField {
+  display: flex;
+}
+
+.createPostButton {
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.createPostBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createPostButton:focus {
+  outline: none;
+}
+
+.createPostButton:disabled {
+  cursor: not-allowed;
+}
+
+.createPostForgot {
+  text-align: center;
+  color: #1775ee;
+}
+
+.createPostRegisterButton {
+  width: 60%;
+  align-self: center;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #42b72a;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.visibilityIcon {
+  cursor: pointer;
+}
+
+.errorMessage {
+  font-size: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c62828;
+}
+
+.createPostCloseButton {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.createPostCloseButton:hover {
+  background-color: #eee;
+}
